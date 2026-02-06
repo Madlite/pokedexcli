@@ -73,7 +73,7 @@ func getCommands() map[string]cliCommand {
 		"mapb": {
 			name:        "map",
 			description: "Disaply the previous 20 map areas",
-			callback:    commandMap,
+			callback:    commandMapb,
 		},
 	}
 }

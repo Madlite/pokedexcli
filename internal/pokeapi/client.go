@@ -1,7 +1,6 @@
 package pokeapi
 
 import(
-	"fmt"
 	"net/http"
 )
 
@@ -13,12 +12,4 @@ func NewClient() Client {
 	return Client{
 		httpClient: http.DefaultClient,
 	}
-}
-
-func (c *Client) Get(url string) (*http.Response, error) {
-	return c.httpClient.Get(url)
-}
-
-func getApiRequest()  {
-	fmt.Println("Fetching api...")
 }

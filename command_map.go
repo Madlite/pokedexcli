@@ -2,26 +2,42 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"log"
+	"errors"
 )
 
 func commandMap(cfg *config) error {
-	url := "https://pokeapi.co/api/v2/location-area"
+	res, err := cfg.pokeapiClient.GetLocations(cfg.nextLocationsURL)
+	if err != nil {
+		return err
+	}
 
-	res, err := cfg.pokeapiClient.Get(url)
+	cfg.nextLocationsURL = res.Next
+	cfg.prevLocationsURL = res.Previous
+
+	for _, result := range res.Results {
+		fmt.Println(result.Name)
+	}
+
+	return nil
+}
+
+
+func commandMapb(cfg *config) error {
+	if cfg.prevLocationsURL == nil {
+		return errors.New("you're on the first page")
+	}
+
+	res, err := cfg.pokeapiClient.GetLocations(cfg.prevLocationsURL)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
-	body, err := io.ReadAll(res.Body)
-	defer res.Body.Close()
-	if res.StatusCode > 299 {
-		log.Fatalf("Response failed with status code: %d and\nbody: %s\n", res.StatusCode, body)
+	
+	cfg.nextLocationsURL = res.Next
+	cfg.prevLocationsURL = res.Previous
+
+	for _, result := range res.Results {
+		fmt.Println(result.Name)
 	}
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%s", body)
 
 	return nil
 }
