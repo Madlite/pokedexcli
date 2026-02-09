@@ -1,9 +1,9 @@
 package main
+
 import "testing"
 
-
 func TestCleanInput(t *testing.T) {
-    cases := []struct {
+	cases := []struct {
 		input    string
 		expected []string
 	}{
@@ -22,7 +22,7 @@ func TestCleanInput(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := cleanInput(c.input)	
+		actual := cleanInput(c.input)
 		if len(actual) != len(c.expected) {
 			t.Errorf("len mismatch for input %q: got %d, want %d",
 				c.input, len(actual), len(c.expected))
