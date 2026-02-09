@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/Madlite/pokedexcli/internal/pokedex"
 )
 
 func (c *Client) GetLocations(pageURL *string) (LocationListResponse, error) {
@@ -120,7 +122,28 @@ func (c *Client) GetPokemon(pokemon string) (PokemonResponse, error) {
 	return pokemonResp, nil
 }
 
-func (c *Client) StorePokedex(pokemon PokemonResponse) {
-	fmt.Println("Store", pokemon.Name, "in pokedex...")
-	// c.pokedex.StorePokedex(pokemon)
+func (c *Client) StorePokedex(p PokemonResponse) {
+	pokemon := pokedex.Pokemon{
+		Name:   p.Name,
+		Height: p.Height,
+		Weight: p.Weight,
+		Stats: pokedex.Stats{
+			HP:             p.Stats[0].BaseStat,
+			Attack:         p.Stats[1].BaseStat,
+			Defense:        p.Stats[2].BaseStat,
+			SpecialAttack:  p.Stats[3].BaseStat,
+			SpecialDefense: p.Stats[4].BaseStat,
+			Speed:          p.Stats[5].BaseStat,
+		},
+		Types: []string{},
+	}
+
+	for _, Type := range p.Types {
+		pokemon.Types = append(pokemon.Types, Type.Type.Name)
+	}
+	c.pokedex.Store(pokemon)
+}
+
+func (c *Client) GetPokedex(pokemon string) {
+	fmt.Print("fetching from pokedex...")
 }

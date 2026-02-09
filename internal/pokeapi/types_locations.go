@@ -22,24 +22,24 @@ type AreaExploreResponse struct {
 }
 
 type PokemonResponse struct {
-	BaseExperience int
-	Height         int
-	Weight         int
-	ID             int
-	Name           string
+	BaseExperience int    `json:"base_experience"`
+	Height         int    `json:"height"`
+	Weight         int    `json:"weight"`
+	ID             int    `json:"id"`
+	Name           string `json:"name"`
 	Stats          []struct {
-		BaseStat int
-		Effort   int
+		BaseStat int `json:"base_stat"`
+		Effort   int `json:"effort"`
 		Stat     struct {
-			Name string
-			URL  string
-		}
-	}
+			Name string `json:"name"`
+			URL  string `json:"url"`
+		} `json:"stat"`
+	} `json:"stats"`
 	Types []struct {
-		Slot int
+		Slot int `json:"slot"`
 		Type struct {
-			Name string
-			URL  string
-		}
-	}
+			Name string `json:"name"`
+			URL  string `json:"url"`
+		} `json:"type"`
+	} `json:"types"`
 }
