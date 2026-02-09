@@ -8,16 +8,16 @@ import (
 
 func commandCatch(cfg *config, args []string) error {
 	if len(args) < 1 {
-		return fmt.Errorf("No pokemon named to catch")
+		return fmt.Errorf("No pokemon entered")
 	}
 	pokemonName := args[0]
 
 	res, err := cfg.pokeapiClient.GetPokemon(pokemonName)
 	if err != nil {
-		return err
+		return fmt.Errorf("No pokemon named that")
 	}
 
-	fmt.Println("Throwing a Pokeball at ", pokemonName, "...")
+	fmt.Printf("Throwing a Pokeball at %v...\n", pokemonName)
 
 	difficulty := int(float64(res.BaseExperience)*0.1 + 50)
 	rng := rand.New(rand.NewSource(time.Now().UnixNano())).Intn(100)

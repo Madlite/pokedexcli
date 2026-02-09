@@ -165,3 +165,7 @@ func (c *Client) GetPokedex(pokemon string) {
 		fmt.Println("  - ", Type)
 	}
 }
+
+func (c *Client) PrintPokedex() {
+	c.pokedex.Print()
+}
