@@ -145,5 +145,23 @@ func (c *Client) StorePokedex(p PokemonResponse) {
 }
 
 func (c *Client) GetPokedex(pokemon string) {
-	fmt.Print("fetching from pokedex...")
+	p, err := c.pokedex.Get(pokemon)
+	if err != nil {
+		fmt.Println("you have not caught that pokemon")
+		return
+	}
+
+	fmt.Println("Height:", p.Height)
+	fmt.Println("Weight:", p.Weight)
+	fmt.Println("Stats:")
+	fmt.Println("  -hp:", p.Stats.HP)
+	fmt.Println("  -attack:", p.Stats.Attack)
+	fmt.Println("  -defense:", p.Stats.Defense)
+	fmt.Println("  -special-attack:", p.Stats.SpecialAttack)
+	fmt.Println("  -special-defense:", p.Stats.SpecialDefense)
+	fmt.Println("  -speed:", p.Stats.Speed)
+	fmt.Println("Types:")
+	for _, Type := range p.Types {
+		fmt.Println("  - ", Type)
+	}
 }
